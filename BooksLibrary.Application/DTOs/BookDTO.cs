@@ -17,5 +17,6 @@ namespace BooksLibrary.Application.DTOs
         public string Author { get; set; } = null!;
         public int TotalCopies { get; set; }
         public int AvailableCopies { get; set; }
+        public List<ReviewDTO> Reviews { get; set; } = new List<ReviewDTO>();
     }
 }

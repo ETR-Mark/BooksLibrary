@@ -46,4 +46,9 @@ bookGroup.MapDelete("/{id}/delete", async (int id,IBooksService booksService) =>
     return $"Book {id} deleted";
 });
 
+bookGroup.MapPost("/{id}/reviews", async (int id, CreateReviewDTO review, IBooksService booksService) =>
+{
+    return await booksService.AddReviewAsync(id, review);
+});
+
 app.Run();

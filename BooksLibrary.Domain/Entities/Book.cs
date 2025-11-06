@@ -9,7 +9,9 @@ namespace BooksLibrary.Domain.Entities
 {
     public class Book
     {
-        public Book() { } // Parameterless constructor for EF Core
+        private readonly List<Review> _reviews = new();
+
+        public Book() { }
 
         public Book(string title, string description, string author, int totalCopies, int availableCopies)
         {
@@ -30,6 +32,8 @@ namespace BooksLibrary.Domain.Entities
         public int TotalCopies { get; private set; }
         public int AvailableCopies { get; private set; }
         
+        public IReadOnlyCollection<Review> Reviews => _reviews.AsReadOnly();
+
         public bool IsAvailable()
         {
             if (AvailableCopies > 0) return true;
@@ -51,6 +55,17 @@ namespace BooksLibrary.Domain.Entities
             }
             TotalCopies = totalCopies;
             AvailableCopies = availableCopies;
+        }
+
+        public void AddReview(string reviewerName, int rating, string comment)
+        {
+            if (rating < 1 || rating > 5)
+            {
+                throw new ArgumentException("Rating must be between 1 and 5.");
+            }
+
+            var review = new Review(Id, reviewerName, rating, comment);
+            _reviews.Add(review);
         }
     }
 }

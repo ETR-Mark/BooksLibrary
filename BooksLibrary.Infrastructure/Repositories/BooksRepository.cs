@@ -34,9 +34,9 @@ namespace BooksLibrary.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Book>> GetAllAsync() => await _dbContext.Books.ToListAsync();
+        public async Task<List<Book>> GetAllAsync() => await _dbContext.Books.Include(b => b.Reviews).ToListAsync();
 
-        public async Task<Book?> GetByIdAsync(int id) => await _dbContext.Books.FindAsync(id);
+        public async Task<Book?> GetByIdAsync(int id) => await _dbContext.Books.Include(b => b.Reviews).FirstOrDefaultAsync(b => b.Id == id);
 
         public async Task<Book> UpdateAsync(int id, Book book)
         {

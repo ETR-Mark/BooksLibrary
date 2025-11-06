@@ -15,6 +15,7 @@ namespace BooksLibrary.Application.Mappings
             CreateMap<Book, BookDTO>();
             CreateMap<CreateBookDTO, Book>();
             CreateMap<Book, CreateBookDTO>();
+            CreateMap<Review, ReviewDTO>();
         }
     }
 }

@@ -57,5 +57,19 @@ namespace BooksLibrary.Application.Services
             var updatedBook = await _booksRepository.UpdateAsync(id, existingBook);
             return _mapper.Map<BookDTO>(updatedBook);
         }
+
+        public async Task<BookDTO> AddReviewAsync(int bookId, CreateReviewDTO reviewDto)
+        {
+            var book = await _booksRepository.GetByIdAsync(bookId);
+            if (book == null)
+            {
+                throw new KeyNotFoundException($"Book with ID {bookId} not found.");
+            }
+
+            book.AddReview(reviewDto.ReviewerName, reviewDto.Rating, reviewDto.Comment);
+
+            var updatedBook = await _booksRepository.UpdateAsync(bookId, book);
+            return _mapper.Map<BookDTO>(updatedBook);
+        }
     }
 }

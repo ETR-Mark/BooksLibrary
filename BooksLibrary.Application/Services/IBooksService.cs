@@ -11,5 +11,6 @@ namespace BooksLibrary.Domain.Interfaces.Services
         Task<CreateBookDTO> AddAsync(CreateBookDTO bookDto);
         Task<BookDTO> UpdateBook(int id, CreateBookDTO bookDto);
         Task DeleteBookAsync(int id);
+        Task<BookDTO> AddReviewAsync(int bookId, CreateReviewDTO reviewDto);
     }
 }
