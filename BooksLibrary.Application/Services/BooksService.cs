@@ -45,8 +45,16 @@ namespace BooksLibrary.Application.Services
 
         public async Task<BookDTO> UpdateBook(int id, CreateBookDTO bookDto)
         {
-            var book = _mapper.Map<Book>(bookDto);
-            var updatedBook = await _booksRepository.UpdateAsync(id, book);
+            var existingBook = await _booksRepository.GetByIdAsync(id);
+            if (existingBook == null)
+            {
+                throw new KeyNotFoundException($"Book with ID {id} not found.");
+            }
+
+            existingBook.UpdateDetails(bookDto.Title, bookDto.Description, bookDto.Author);
+            existingBook.UpdateStock(bookDto.TotalCopies, bookDto.AvailableCopies);
+            
+            var updatedBook = await _booksRepository.UpdateAsync(id, existingBook);
             return _mapper.Map<BookDTO>(updatedBook);
         }
     }

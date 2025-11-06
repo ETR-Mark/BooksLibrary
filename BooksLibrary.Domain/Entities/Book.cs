@@ -9,6 +9,8 @@ namespace BooksLibrary.Domain.Entities
 {
     public class Book
     {
+        public Book() { } // Parameterless constructor for EF Core
+
         public Book(string title, string description, string author, int totalCopies, int availableCopies)
         {
             Title = title;
@@ -19,19 +21,36 @@ namespace BooksLibrary.Domain.Entities
         }
 
         [Key]
-        public int Id { get; set; }
+        public int Id { get; private set; }
         [Required]
-        public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string Title { get; private set; } = null!;
+        public string Description { get; private set; } = null!;
         [Required]
-        public string Author { get; set; } = null!;
-        public int TotalCopies { get; set; }
-        public int AvailableCopies { get; set; }
+        public string Author { get; private set; } = null!;
+        public int TotalCopies { get; private set; }
+        public int AvailableCopies { get; private set; }
         
         public bool IsAvailable()
         {
             if (AvailableCopies > 0) return true;
             return false;
+        }
+
+        public void UpdateDetails(string title, string description, string author)
+        {
+            Title = title;
+            Description = description;
+            Author = author;
+        }
+
+        public void UpdateStock(int totalCopies, int availableCopies)
+        {
+            if (availableCopies > totalCopies)
+            {
+                throw new ArgumentException("Available copies cannot exceed total copies.");
+            }
+            TotalCopies = totalCopies;
+            AvailableCopies = availableCopies;
         }
     }
 }

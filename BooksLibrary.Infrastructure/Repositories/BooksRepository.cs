@@ -43,11 +43,8 @@ namespace BooksLibrary.Infrastructure.Repositories
             var existingBook = await _dbContext.Books.FindAsync(id);
             if (existingBook == null) throw new Exception("Book not found");
 
-            existingBook.Title = book.Title;
-            existingBook.Description = book.Description;
-            existingBook.Author = book.Author;
-            existingBook.AvailableCopies = book.AvailableCopies;
-            existingBook.TotalCopies = book.TotalCopies;
+            existingBook.UpdateDetails(book.Title, book.Description, book.Author);
+            existingBook.UpdateStock(book.TotalCopies, book.AvailableCopies);
             
             await _dbContext.SaveChangesAsync();
             return existingBook;
