@@ -25,6 +25,9 @@ namespace BooksLibrary.Domain.Entities
         [Key]
         public int Id { get; private set; }
         [Required]
+        public int CategoryId { get; private set; }
+        public Category Category { get; private set; } = null!;
+        [Required]
         public string Title { get; private set; } = null!;
         public string Description { get; private set; } = null!;
         [Required]

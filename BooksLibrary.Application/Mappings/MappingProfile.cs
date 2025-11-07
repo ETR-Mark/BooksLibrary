@@ -12,6 +12,9 @@ namespace BooksLibrary.Application.Mappings
     public class MappingProfile : Profile
     { 
         public MappingProfile() {
+            CreateMap<Category, CreateCategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>();
+            CreateMap<CreateCategoryDTO, Category>();
             CreateMap<Book, BookDTO>();
             CreateMap<CreateBookDTO, Book>();
             CreateMap<Book, CreateBookDTO>();
